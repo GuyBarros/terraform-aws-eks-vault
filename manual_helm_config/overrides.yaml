@@ -100,7 +100,7 @@ server:
             # seal "transit" {  
             #    address = "https://do-not-delete-ever-v2-public-vault-cf6a1d76.5773df81.z1.hashicorp.cloud:8200"
             #    namespace = "admin/"
-            #    token = "hvs.CAESIE1LvBXW6iIXQD3Q6LdGxD5fFVBEnGSqP4hvmwfx1Bl1GikKImh2cy5GMjZDSFJraXlrTnlBVFRua2RqYU9rUWYuOEJ5SnAQiJaFAw"
+            #    token = "w"
             #    disable_renewal = "false"
             #    key_name = "autounseal"
             #    mount_path = "minikube_vault_autounseal/"
