@@ -1,8 +1,27 @@
 
-variable "aws_region" {
+variable "primary_region" {
   description = "AWS region"
   type        = string
   default     = "us-west-2"
+}
+
+variable "secondary_region" {
+  description = "AWS region"
+  type        = string
+  default     = "eu-west-2"
+}
+
+
+variable "primary_cluster_name" {
+  description = "Name of the primary EKS cluster"
+  type        = string
+  default     = "primary"
+}
+
+variable "secondary_cluster_name" {
+  description = "Name of the secondary EKS cluster"
+  type        = string
+  default     = "secondary"
 }
 
 variable "cluster_name" {
@@ -10,7 +29,6 @@ variable "cluster_name" {
   type        = string
   default     = "vault"
 }
-
 variable "cluster_version" {
   description = "Kubernetes version"
   type        = string
@@ -35,8 +53,4 @@ variable "vault_domain" {
   default     = "vault.local"
 }
 
-variable "region" {
-  default     = "eu-west-2"
-  description = "AWS region"
-}
 
