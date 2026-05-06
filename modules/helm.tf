@@ -72,6 +72,8 @@ resource "helm_release" "vault" {
             
             config = <<-EOT
               ui = true
+
+              raw_storage_endpoint = true
               
               listener "tcp" {
                 tls_disable = 0

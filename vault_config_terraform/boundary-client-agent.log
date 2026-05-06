@@ -1,0 +1,4 @@
+[94m2026-04-28T15:05:34.646-0300 [INFO]  starting Boundary client-agent: : version=0.21.2 log_level=info
+[0m[91m2026-04-28T15:05:34.648-0300 [ERROR] error starting HTTP server: error="main.runHttpServer: failed to listen on address: listen tcp 127.0.0.1:9300: bind: address already in use"
+[0m[94m2026-04-28T15:05:34.648-0300 [INFO]  shutting down Boundary client-agent
+[0m

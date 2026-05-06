@@ -1,0 +1,23 @@
+# Configure the AWS Provider
+provider "aws" {
+  region = var.aws_region
+}
+
+
+
+data "aws_instance" "windows" {
+
+  filter {
+    name   = "instance-state-name"
+    # name = "guystack1-Windows"
+    values = ["running"]
+  }
+
+  instance_tags = {
+    Function = "Windows"
+    Purpose  = var.cluster_name
+    #owner = var.owner_tag
+  }
+
+  get_password_data = true
+}

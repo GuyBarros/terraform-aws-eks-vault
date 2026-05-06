@@ -54,3 +54,6 @@ variable "vault_domain" {
 }
 
 
+variable "public_key" {
+  description = "The contents of the SSH public key to use for connecting to the cluster."
+}

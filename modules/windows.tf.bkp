@@ -1,0 +1,71 @@
+#AMI Filter for Windows Server 2019 Base
+# data "aws_ami" "windows" {
+#   most_recent = true
+
+#   filter {
+#     name   = "name"
+#     values = ["Windows_Server-2019-English-Full-Base-*"]
+#   }
+
+#   filter {
+#     name   = "virtualization-type"
+#     values = ["hvm"]
+#   }
+
+#   owners = ["801119661308"] # Canonical
+
+# }
+
+#this is needed to decrypt the windows password, if you remove the windows instance, you can remove this key
+resource "aws_key_pair" "for_windows" {
+  key_name   = "${var.cluster_name}-windows"
+  public_key = var.public_key
+
+}
+
+
+data "aws_ami" "windows" {
+  filter {
+    name   = "name"
+    values = ["hc-base-windows-server-2025-x64-*"]
+  }
+  filter {
+    name   = "state"
+    values = ["available"]
+  }
+  most_recent = true
+  owners      = ["888995627335"] # hc-ami_prod
+}
+
+resource "aws_instance" "windows" {
+
+  ami           = data.aws_ami.windows.id
+  instance_type = var.windows_instance_type_worker
+  key_name      = aws_key_pair.for_windows.id
+
+  subnet_id              = element(module.vpc.public_subnets, 0)
+  #iam_instance_profile   = aws_iam_instance_profile.consul-join.name
+  vpc_security_group_ids = [module.vpc.default_security_group_id]
+
+
+  root_block_device {
+    volume_size           = "240"
+    delete_on_termination = "true"
+  }
+
+  ebs_block_device {
+    device_name = "/dev/sdh"
+    volume_size           = "240"
+    delete_on_termination = "true"
+  }
+
+  tags = {
+   Purpose        = var.cluster_name
+   Function       = "Windows"
+   Name            = "${var.cluster_name}-Windows" 
+   }
+
+
+get_password_data = false
+  user_data = base64encode(file("${path.module}/templates/windows/init.ps1"))
+}
