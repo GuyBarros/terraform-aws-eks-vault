@@ -67,7 +67,8 @@ module "eks" {
       instance_types = ["t4g.medium"]
       ami_type      = "AL2023_ARM_64_STANDARD"
       capacity_type  = "ON_DEMAND"
-
+       ami_id = data.aws_ami.ubuntu.id
+      
       # Enable IMDSv2
       metadata_options = {
         http_endpoint               = "enabled"

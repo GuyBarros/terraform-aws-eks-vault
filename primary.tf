@@ -12,6 +12,7 @@ module "primary" {
   vault_namespace = var.vault_namespace
   public_key = var.public_key
   
+  is_hashicorp = true
 }
 
 output "primary_region" {

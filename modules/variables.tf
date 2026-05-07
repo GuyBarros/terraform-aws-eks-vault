@@ -17,6 +17,12 @@ variable "cluster_version" {
   default     = "1.28"
 }
 
+variable "is_hashicorp" {
+  description = "Whether the AMI is from HashiCorp or Canonical"
+  type        = bool
+  default     = false
+}
+
 variable "vault_namespace" {
   description = "Kubernetes namespace for Vault"
   type        = string

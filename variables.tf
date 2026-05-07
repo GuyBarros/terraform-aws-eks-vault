@@ -57,3 +57,9 @@ variable "vault_domain" {
 variable "public_key" {
   description = "The contents of the SSH public key to use for connecting to the cluster."
 }
+
+variable "is_hashicorp" {
+  description = "Whether the AMI is from HashiCorp or Canonical"
+  type        = bool
+  default     = true
+}
