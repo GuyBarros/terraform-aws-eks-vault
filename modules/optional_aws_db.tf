@@ -1,8 +1,3 @@
-resource "aws_db_subnet_group" "demostack" {
-  name       = "${var.cluster_name}-databases"
-  subnet_ids  = module.vpc.private_subnets
-
-}
 
 resource "aws_db_instance" "mysql" {
   identifier           = "${var.cluster_name }-mysql"

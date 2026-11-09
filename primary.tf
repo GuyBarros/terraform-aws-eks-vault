@@ -11,7 +11,12 @@ module "primary" {
   cluster_version = var.cluster_version
   vault_namespace = var.vault_namespace
   public_key = var.public_key
-  
+  deployment_id = var.primary_cluster_name
+enable_k8sosquery      = true
+  enable_kubequery       = true
+  k8sosquery_values_path = "${path.module}/config/k8sosquery-values.yaml"
+  kubequery_values_path  = "${path.module}/config/kubequery-values.yaml"
+
   is_hashicorp = true
 }
 

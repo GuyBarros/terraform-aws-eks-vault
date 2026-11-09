@@ -34,9 +34,11 @@ resource "aws_iam_policy" "vault_kms" {
       {
         Effect = "Allow"
         Action = [
-          "kms:Encrypt",
           "kms:Decrypt",
-          "kms:DescribeKey"
+      "kms:Encrypt",
+      "kms:DescribeKey",
+      "kms:ReEncrypt*",
+      "sts:AssumeRole"
         ]
         Resource = aws_kms_key.vault.arn
       }

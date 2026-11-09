@@ -2,10 +2,10 @@
 # EKS Cluster
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "~> 20.0"
+  version = "~> 21.29.0"
 
-  cluster_name    = var.cluster_name
-  cluster_version = var.cluster_version
+  name               = var.cluster_name
+  kubernetes_version = var.cluster_version
 
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
@@ -14,10 +14,19 @@ module "eks" {
   enable_irsa = true
 
   # Cluster access configuration
-  cluster_endpoint_public_access = true
+  endpoint_public_access = true
+
+  upgrade_policy = {
+    support_type = "STANDARD"
+  }
+
+  # Required by ENABLE_POD_ENI on vpc-cni; v21 no longer attaches this automatically.
+  iam_role_additional_policies = {
+    AmazonEKSVPCResourceController = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
+  }
 
   # Allow node to cluster communication
-  cluster_security_group_additional_rules = {
+  security_group_additional_rules = {
     ingress_nodes_ephemeral_ports_tcp = {
       description                = "Nodes on ephemeral ports"
       protocol                   = "tcp"
@@ -67,8 +76,8 @@ module "eks" {
       instance_types = ["t4g.medium"]
       ami_type      = "AL2023_ARM_64_STANDARD"
       capacity_type  = "ON_DEMAND"
-       ami_id = data.aws_ami.ubuntu.id
-      
+      # ami_id = data.aws_ami.amazon_linux.id
+       
       # Enable IMDSv2
       metadata_options = {
         http_endpoint               = "enabled"
@@ -89,18 +98,21 @@ module "eks" {
   }
 
   # Cluster add-ons
-  cluster_addons = {
+  addons = {
     coredns = {
       most_recent = true
       configuration_values = jsonencode({
         computeType = "Fargate"
       })
     }
+    # Nodes can't become Ready without these, so they must exist before the node group.
     kube-proxy = {
-      most_recent = true
+      most_recent    = true
+      before_compute = true
     }
     vpc-cni = {
-      most_recent = true
+      most_recent    = true
+      before_compute = true
       configuration_values = jsonencode({
         env = {
           ENABLE_PREFIX_DELEGATION = "true"

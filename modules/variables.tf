@@ -29,6 +29,12 @@ variable "vault_namespace" {
   default     = "vault"
 }
 
+variable "vault_version" {
+  description = "Vault version"
+  type        = string
+  default     = "2.2.1-ent"
+}
+
 variable "vault_license" {
   description = "Vault Enterprise license key"
   type        = string
@@ -88,4 +94,30 @@ variable "windows_instance_type_worker" {
 
 variable "public_key" {
   description = "The contents of the SSH public key to use for connecting to the cluster."
+}
+
+// EDR variables
+variable "deployment_id" {
+  description = "Deployment identifier used as the Uptycs cluster name"
+  type        = string
+}
+
+variable "enable_k8sosquery" {
+  description = "Whether to install the k8sosquery Helm release"
+  type        = bool
+}
+
+variable "enable_kubequery" {
+  description = "Whether to install the kubequery Helm release"
+  type        = bool
+}
+
+variable "k8sosquery_values_path" {
+  description = "Absolute path to the k8sosquery Helm values file"
+  type        = string
+}
+
+variable "kubequery_values_path" {
+  description = "Absolute path to the kubequery Helm values file"
+  type        = string
 }

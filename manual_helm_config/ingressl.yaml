@@ -1,0 +1,23 @@
+ingress:
+    activeService: true
+    annotations:
+      alb.ingress.kubernetes.io/actions.ssl-redirect: "{\n  \"Type\": \"redirect\",
+        \n  \"RedirectConfig\": { \n    \"Protocol\": \"HTTPS\", \n    \"Port\": \"443\",
+        \n    \"StatusCode\": \"HTTP_301\"\n  }\n}\n"
+      alb.ingress.kubernetes.io/backend-protocol: HTTPS
+      alb.ingress.kubernetes.io/success-codes: 200,473
+      alb.ingress.kubernetes.io/certificate-arn: |
+        arn:aws:acm:us-east-1:404187436949:certificate/3b819602-bf48-4136-8716-db66853bbc41
+      alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
+      alb.ingress.kubernetes.io/scheme: internal
+      alb.ingress.kubernetes.io/target-type: ip
+      alb.ingress.kubernetes.io/healthcheck-path: "/v1/sys/health"
+    enabled: true
+    extraPaths: []
+    hosts:
+    - host: vus-qa.limbo.work
+      paths: []
+    ingressClassName: ingress-default-aws
+    labels: {}
+    pathType: Prefix
+    performance: true

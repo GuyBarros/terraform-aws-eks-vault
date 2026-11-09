@@ -32,13 +32,19 @@ variable "cluster_name" {
 variable "cluster_version" {
   description = "Kubernetes version"
   type        = string
-  default     = "1.28"
+  default     = "1.37"
 }
 
 variable "vault_namespace" {
   description = "Kubernetes namespace for Vault"
   type        = string
   default     = "vault"
+}
+
+variable "vault_version" {
+  description = "Vault version"
+  type        = string
+  default     = "2.2.1-ent"
 }
 
 variable "vault_license" {

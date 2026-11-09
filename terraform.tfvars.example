@@ -1,0 +1,7 @@
+primary_cluster_name = "customer-a"
+primary_region = "us-west-2"
+cluster_version = "1.37"
+vault_namespace = "vault"
+vault_version = "2.2.1-ent"
+vault_license = "02MV4UU"
+public_key = "ssh-rsa AAAAB3N"

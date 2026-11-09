@@ -21,7 +21,7 @@ resource "helm_release" "vault" {
       server = {
         image = {
           repository = "hashicorp/vault-enterprise"
-          tag        = "1.21.1-ent"
+          tag        = var.vault_version
         }
 
         enterpriseLicense = {
@@ -51,6 +51,10 @@ resource "helm_release" "vault" {
               secretName  = kubernetes_secret.vault_tls.metadata[0].name
               defaultMode = 420
             }
+          },
+          {
+            name = "vault-plugins"
+            emptyDir = { }
           }
         ]
 
@@ -59,6 +63,11 @@ resource "helm_release" "vault" {
             name      = "userconfig-vault-tls"
             mountPath = "/vault/userconfig/vault-tls"
             readOnly  = true
+          },
+           {
+            name      = "vault-plugins"
+            mountPath = "/vault/plugins"
+            readOnly  = false
           }
         ]
 
@@ -72,6 +81,8 @@ resource "helm_release" "vault" {
             
             config = <<-EOT
               ui = true
+
+              plugin_directory = "/vault/plugins"
 
               raw_storage_endpoint = true
               

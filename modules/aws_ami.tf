@@ -30,3 +30,21 @@
   most_recent = true
   owners      = ["888995627335"] # hc-ami_prod
 }
+
+# 
+
+data "aws_ami" "amazon_linux" {
+ # for_each = toset(["amd64", "arm64"])
+
+  filter {
+    name   = "name"
+    values = [format("hc-base-al2023-%s-*", "arm64")]
+    # values = [format("hc-base-ubuntu-2404-%s-*", each.value)]
+  }
+  filter {
+    name   = "state"
+    values = ["available"]
+  }
+  most_recent = true
+  owners      = ["888995627335"] # hc-ami_prod
+}
